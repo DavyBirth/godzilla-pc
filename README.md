@@ -14,7 +14,33 @@ Some buildings can look translucent in photo mode. A reported photo-mode entry f
 
 ## Source and credits
 
-Corresponding source is included as `SOURCE.zip` inside the application ZIP. Licenses are included. Runtime based on [bbport](https://github.com/deadinside28/bloodborne_pc) and [shadPS4](https://github.com/shadps4-emu/shadPS4), GPL-2.0-or-later. Microsoft runtime libraries have their own license.
+Project source is available in this repository. The application ZIP also contains `SOURCE.zip`, including the pinned third-party dependencies. Licenses are included. Runtime based on [bbport](https://github.com/deadinside28/bloodborne_pc) and [shadPS4](https://github.com/shadps4-emu/shadPS4), GPL-2.0-or-later. Microsoft runtime libraries have their own license.
 
 Godzilla ©2015 Bandai Namco Entertainment Inc. TM & © TOHO CO., LTD.
 Independent project, not affiliated with or endorsed by the rights holders.
+
+## Building from source
+
+Windows 10/11 x64, LLVM/Clang, CMake 3.28+, Ninja, the Windows SDK and Vulkan SDK are required. Python 3 prepares the game image. Run from a developer terminal with the Windows SDK libraries available:
+
+```powershell
+git clone --recurse-submodules https://github.com/DavyBirth/godzilla-pc.git
+cd godzilla-pc
+cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DGZ_DISTRIBUTION_BUILD=ON -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+```
+
+CMake downloads the remaining dependencies at pinned revisions. Supply your own game data and firmware separately; building does not prepare a playable installation.
+
+## Code layout
+
+- `src/loader.c`: loads the prepared executable and connects its imports.
+- `src/rt_*.c`: Windows implementations of the system services used by the game.
+- `src/native_hook.*`: function replacement hooks.
+- `src/pc_*`: controls, menus and photo mode.
+- `src/*.cs`: launcher, translations and updater.
+- `gpu/`: graphics integration; `gpu/vendor/` contains adapted upstream files.
+- `scripts/`: preparation and validation of the owner's game files.
+- `third_party/`: pinned bbport and shadPS4 source repositories.
+
+Project C/C++ and C# use `.clang-format` (four spaces, 100 columns). Python scripts use Black with a 100-column limit. Keep upstream files and license notices intact.

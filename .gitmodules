@@ -1,0 +1,6 @@
+[submodule "third_party/shadPS4"]
+	path = third_party/shadPS4
+	url = https://github.com/shadps4-emu/shadPS4.git
+[submodule "third_party/bloodborne_pc"]
+	path = third_party/bloodborne_pc
+	url = https://github.com/deadinside28/bloodborne_pc.git

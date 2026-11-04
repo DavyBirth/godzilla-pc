@@ -1,0 +1,147 @@
+{
+  "source": "https://kenney.nl/assets/input-prompts",
+  "license": "CC0-1.0",
+  "archive_sha256": "ac2fcf599080b0f3ba2d174c9474db6df1a0e96ff0662580e2da79a122ab78a1",
+  "files": [
+    {
+      "file": "xbox/xbox_button_color_b.png",
+      "source": "Xbox Series/Default/xbox_button_color_b.png",
+      "sha256": "89292cbfe1bd0eb977021e43281bd3e2be8dde35754b65f4b16b3a6d39355343"
+    },
+    {
+      "file": "xbox/xbox_button_color_x.png",
+      "source": "Xbox Series/Default/xbox_button_color_x.png",
+      "sha256": "1f33f62d907046f5c3a5d3e1b5171d68f30d46c9a81c2424e4e5e5d817636a70"
+    },
+    {
+      "file": "xbox/xbox_button_color_y.png",
+      "source": "Xbox Series/Default/xbox_button_color_y.png",
+      "sha256": "b094eed6dca5de043597e7b3b24caf89d811a3e7711ebdf831992f70aa711a99"
+    },
+    {
+      "file": "xbox/xbox_button_color_a.png",
+      "source": "Xbox Series/Default/xbox_button_color_a.png",
+      "sha256": "e4158c16e2aca817503819bba998dc4d749327b8168ddd9dd19090860563badf"
+    },
+    {
+      "file": "xbox/xbox_lb.png",
+      "source": "Xbox Series/Default/xbox_lb.png",
+      "sha256": "587d43aac834743c64e6958f3fb13b0c5cc9075c9a84400e59c6fe1acbe3897f"
+    },
+    {
+      "file": "xbox/xbox_rb.png",
+      "source": "Xbox Series/Default/xbox_rb.png",
+      "sha256": "692acf85c1b9e5c9d2b6c9b0a44bba2f21bf0f417e6192a4eb674f0c3627005e"
+    },
+    {
+      "file": "xbox/xbox_lt.png",
+      "source": "Xbox Series/Default/xbox_lt.png",
+      "sha256": "42bed96d924e9dec519d5b39e273f2ee4b5992dfbd805919cf034aa468d145c2"
+    },
+    {
+      "file": "xbox/xbox_rt.png",
+      "source": "Xbox Series/Default/xbox_rt.png",
+      "sha256": "f6ae8aa8d4c648a65bb26a3a56982c07f9b562242e0c569389dbfbfc7d0851c9"
+    },
+    {
+      "file": "xbox/xbox_stick_l.png",
+      "source": "Xbox Series/Default/xbox_stick_l.png",
+      "sha256": "8d2dc664f862155ddfecd7eaf082345da7c8099881c4cd595f0aa01ecfb2c47f"
+    },
+    {
+      "file": "xbox/xbox_stick_r.png",
+      "source": "Xbox Series/Default/xbox_stick_r.png",
+      "sha256": "61d98a35a5360fa66cd74743b0f63d32b8204bfc0ec58c0bf08fe3e55b8ea90b"
+    },
+    {
+      "file": "xbox/xbox_stick_r_press.png",
+      "source": "Xbox Series/Default/xbox_stick_r_press.png",
+      "sha256": "c9b9bdd53fd412240328df8e81a20673a774af9ba395bccb7923d584f2fad0a1"
+    },
+    {
+      "file": "xbox/xbox_button_view.png",
+      "source": "Xbox Series/Default/xbox_button_view.png",
+      "sha256": "f48da3d896b4ae23a2471f0bf631df2e17cb274868a83958b9350b615c03cd39"
+    },
+    {
+      "file": "xbox/xbox_button_menu.png",
+      "source": "Xbox Series/Default/xbox_button_menu.png",
+      "sha256": "49e03870c73236cdc757e7df6a053e52569acbf0ace0f95d4f1881c53e090247"
+    },
+    {
+      "file": "xbox/xbox_dpad.png",
+      "source": "Xbox Series/Default/xbox_dpad.png",
+      "sha256": "10e27b4bb02ba3f6c9994e85998fca7bc002c6dc8297f8b67e80207273b202c6"
+    },
+    {
+      "file": "nintendo/switch_button_b.png",
+      "source": "Nintendo Switch/Default/switch_button_b.png",
+      "sha256": "5d95680fcfbf59ba94a3cc696fd8251e4fe292b421716b90b5272ca5b32d91bf"
+    },
+    {
+      "file": "nintendo/switch_button_y.png",
+      "source": "Nintendo Switch/Default/switch_button_y.png",
+      "sha256": "133e98bbd388d29d7325b20b729518c98bb96707d743f2e142882b528bcf6263"
+    },
+    {
+      "file": "nintendo/switch_button_x.png",
+      "source": "Nintendo Switch/Default/switch_button_x.png",
+      "sha256": "90f1f195dd70724a605408bd60359c04b4013d8c5236442655256f43ea0cc043"
+    },
+    {
+      "file": "nintendo/switch_button_a.png",
+      "source": "Nintendo Switch/Default/switch_button_a.png",
+      "sha256": "c24af67ce34d3116e4750f052221d6bfe8a87cb0de8364bb23a573a85391fb10"
+    },
+    {
+      "file": "nintendo/switch_button_l.png",
+      "source": "Nintendo Switch/Default/switch_button_l.png",
+      "sha256": "944cbe119693f0bbae7bfceb9cb453c5ee4da898180441937190aeedb6bc0b83"
+    },
+    {
+      "file": "nintendo/switch_button_r.png",
+      "source": "Nintendo Switch/Default/switch_button_r.png",
+      "sha256": "9a1a982e2f6ed96863d796809007298cd4108ac3b04e425f279d486ddd6051b1"
+    },
+    {
+      "file": "nintendo/switch_button_zl.png",
+      "source": "Nintendo Switch/Default/switch_button_zl.png",
+      "sha256": "903157b2ba5af2c07b0115c445425fd2653134f93e010e3c76e3dec085ed0f0e"
+    },
+    {
+      "file": "nintendo/switch_button_zr.png",
+      "source": "Nintendo Switch/Default/switch_button_zr.png",
+      "sha256": "2b32f2075bdcf16497df1881c39810eb81e4e080ed970d7b9064a109e62fb723"
+    },
+    {
+      "file": "nintendo/switch_stick_l.png",
+      "source": "Nintendo Switch/Default/switch_stick_l.png",
+      "sha256": "8d2dc664f862155ddfecd7eaf082345da7c8099881c4cd595f0aa01ecfb2c47f"
+    },
+    {
+      "file": "nintendo/switch_stick_r.png",
+      "source": "Nintendo Switch/Default/switch_stick_r.png",
+      "sha256": "61d98a35a5360fa66cd74743b0f63d32b8204bfc0ec58c0bf08fe3e55b8ea90b"
+    },
+    {
+      "file": "nintendo/switch_stick_r_press.png",
+      "source": "Nintendo Switch/Default/switch_stick_r_press.png",
+      "sha256": "c9b9bdd53fd412240328df8e81a20673a774af9ba395bccb7923d584f2fad0a1"
+    },
+    {
+      "file": "nintendo/switch_button_minus.png",
+      "source": "Nintendo Switch/Default/switch_button_minus.png",
+      "sha256": "4d97b0e1d5d67916283473f5c1d9f2e1cdd9f444e43d669c544caf59ed2d68bd"
+    },
+    {
+      "file": "nintendo/switch_button_plus.png",
+      "source": "Nintendo Switch/Default/switch_button_plus.png",
+      "sha256": "0f8b7a6deb6665279a7763e5150bb74303a83dc45f442c978ed990bbd8e76d64"
+    },
+    {
+      "file": "nintendo/switch_dpad.png",
+      "source": "Nintendo Switch/Default/switch_dpad.png",
+      "sha256": "cb6bbdc12a3b651f65ba511a163c73020936696bb1f0ba26483653848bfc3109"
+    }
+  ]
+}

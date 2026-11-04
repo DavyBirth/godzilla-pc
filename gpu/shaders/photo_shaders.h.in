@@ -1,0 +1,7 @@
+// Generated from the project's GLSL sources. GPL-2.0-or-later.
+#pragma once
+#include <string_view>
+namespace GzPhoto {
+inline constexpr std::string_view VertexSource=R"GZ_SHADER(@PHOTO_VERTEX@)GZ_SHADER";
+inline constexpr std::string_view FragmentSource=R"GZ_SHADER(@PHOTO_FRAGMENT@)GZ_SHADER";
+}
