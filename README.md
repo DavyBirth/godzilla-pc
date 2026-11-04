@@ -44,3 +44,11 @@ CMake downloads the remaining dependencies at pinned revisions. Supply your own 
 - `third_party/`: pinned bbport and shadPS4 source repositories.
 
 Project C/C++ and C# use `.clang-format` (four spaces, 100 columns). Python scripts use Black with a 100-column limit. Keep upstream files and license notices intact.
+
+## AAC decoder maintenance
+
+Version 1.0 uses FFmpeg's native AAC decoder in place of FDK AAC. The build no longer fetches or links FDK AAC. The source package includes the complete FFmpeg 7.1.1 source and its pinned vcpkg build recipe, in addition to the prebuilt wrapper.
+
+After building, run `powershell -NoProfile -File tools/test_ajm_aac.ps1` for isolated AAC checks. Fixtures are generated from a sine wave and silence; they contain no game recordings. `tools/prepare_ffmpeg_source.py` fetches and verifies the complete FFmpeg source for source packaging.
+
+Existing Preview launchers can update directly to 1.0. The legacy `Godzilla-Windows-update.zip` asset is retained alongside the versioned ZIP; both contain the same package.

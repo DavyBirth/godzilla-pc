@@ -95,11 +95,14 @@ string(PREPEND AV_STATE_SOURCE "#include \"pc_playback.h\"\n")
 file(CONFIGURE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/avplayer_state.cpp" CONTENT "${AV_STATE_SOURCE}" @ONLY)
 list(APPEND AVPLAYER "${CMAKE_CURRENT_BINARY_DIR}/avplayer_state.cpp")
 file(GLOB AJM CONFIGURE_DEPENDS "${SHAD}/src/core/libraries/ajm/*.cpp")
-list(REMOVE_ITEM AJM "${SHAD}/src/core/libraries/ajm/ajm_aac.cpp")
-file(READ "${SHAD}/src/core/libraries/ajm/ajm_aac.cpp" AJM_AAC_SOURCE)
-string(REPLACE "externals/aacdec/fdk-aac/" "${gz_aac_SOURCE_DIR}/" AJM_AAC_SOURCE "${AJM_AAC_SOURCE}")
-file(CONFIGURE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/ajm_aac.cpp" CONTENT "${AJM_AAC_SOURCE}" @ONLY)
-list(APPEND AJM "${CMAKE_CURRENT_BINARY_DIR}/ajm_aac.cpp")
+list(REMOVE_ITEM AJM "${SHAD}/src/core/libraries/ajm/ajm_aac.cpp"
+                     "${SHAD}/src/core/libraries/ajm/ajm_instance.cpp")
+# Keep the reference untouched; select our FFmpeg AAC implementation at the factory.
+file(READ "${SHAD}/src/core/libraries/ajm/ajm_instance.cpp" AJM_INSTANCE_SOURCE)
+string(REPLACE "#include \"ajm_aac.h\"" "#include \"${CMAKE_CURRENT_SOURCE_DIR}/ajm_aac.h\""
+       AJM_INSTANCE_SOURCE "${AJM_INSTANCE_SOURCE}")
+file(CONFIGURE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/ajm_instance.cpp" CONTENT "${AJM_INSTANCE_SOURCE}" @ONLY)
+list(APPEND AJM "${CMAKE_CURRENT_BINARY_DIR}/ajm_instance.cpp" ajm_aac.cpp)
 # Decode into host staging memory, then publish through the physical alias.
 # Writing the tracked guest pages row by row can invalidate textures while the
 # chroma plane still contains zeros from memset (a transient green frame).
@@ -214,4 +217,4 @@ target_compile_definitions(gzgpu PRIVATE WIN32_LEAN_AND_MEAN NOMINMAX _CRT_SECUR
 target_compile_options(gzgpu PRIVATE -Wno-deprecated-declarations -Wno-missing-field-initializers -fno-omit-frame-pointer)
 target_link_libraries(gzgpu PUBLIC Vulkan::Headers fmt::fmt Boost::headers magic_enum::magic_enum
     tsl::robin_map GPUOpen::VulkanMemoryAllocator SDL3::SDL3-static xxhash miniz
-    Zydis glslang::glslang glslang::SPIRV sirit xbyak::xbyak ffmpeg onecore gz_atrac9_codec fdk-aac)
+    Zydis glslang::glslang glslang::SPIRV sirit xbyak::xbyak ffmpeg onecore gz_atrac9_codec)

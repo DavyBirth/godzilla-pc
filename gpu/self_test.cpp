@@ -379,7 +379,7 @@ extern "C" void gz_gpu_self_test() {
             require(gz_dialog_active(), "SaveDataDialog visible");
             SDL_Event key{};
             key.type = SDL_EVENT_KEY_DOWN;
-            key.key.scancode = mode == 2 ? SDL_SCANCODE_X : SDL_SCANCODE_SPACE;
+              key.key.scancode = mode == 2 ? SDL_SCANCODE_BACKSPACE : SDL_SCANCODE_RETURN;
             require(SDL_PushEvent(&key), "SaveDataDialog input");
             for (int n = 0; n < 200 && status() == 2; ++n)
                 std::this_thread::sleep_for(std::chrono::milliseconds(5));

@@ -635,7 +635,8 @@ void gz_pad_self_test() {
     for (bool down : {true, false}) {
         SDL_Event event{};
         event.type = down ? SDL_EVENT_KEY_DOWN : SDL_EVENT_KEY_UP;
-        event.key.scancode = SDL_SCANCODE_SPACE;
+        // Enter confirms in every context; Space is an action during gameplay.
+        event.key.scancode = SDL_SCANCODE_RETURN;
         event.key.down = down;
         check(SDL_PushEvent(&event));
         bool seen = false;
