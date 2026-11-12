@@ -66,10 +66,14 @@ Compared with running through a general emulator, this package provides a dedica
 
 Eight local measurements of the same 68-pipeline preload averaged **about 26% less preload time** than the previous cache path. This measures that startup step on one machine; it is not a gameplay FPS gain, a comparison against shadPS4, or a guarantee that loading pauses disappear.
 
+## Earlier video and text fixes
+
+Two of the first issues addressed in this port were flickering prerecorded videos/cutscenes and missing on-screen text, both reported on the emulation setup used during development. The video path was corrected, including the flicker during fades, and compatible fonts restored the previously invisible text. These are results from this project's test setup, not a claim that every emulator or configuration has those problems. Compatibility fonts may differ from the original console font.
+
 ## Known limitations
 
 - VS is unavailable because PlayStation online services are not provided.
-- Photo-mode material fixes cover the verified variants; broader scene coverage remains ongoing.
+- Some buildings still become transparent in photo mode, including buildings in front of the tested city area. The 1.0.2 fix covers three verified material variants and does not yet cover the entire scene.
 - A reported photo-mode entry failure in the bridge arena has not yet been confirmed resolved.
 - Brief loading pauses reported on a GTX remain under investigation.
 - Previously collected blank photos are not recovered automatically.
