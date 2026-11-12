@@ -1,16 +1,68 @@
 # Godzilla for Windows
 
-**[Version 1.0](https://github.com/DavyBirth/godzilla-pc/releases/tag/v1.0.0)** — native Windows runtime for Godzilla (PS4, 2015).
+**[Download version 1.0.2](https://github.com/DavyBirth/godzilla-pc/releases/latest)** · [What's new](https://github.com/DavyBirth/godzilla-pc/releases/tag/v1.0.2)
 
-## Updating
+Play Godzilla (PS4, 2015) on Windows with a dedicated native runtime, PC controls, a launcher and an expanded photo mode. You supply your own extracted **CUSA02046 game with update 01.01**. No game files or console firmware are distributed here.
 
-Open the launcher, then **Updates → Check for updates → Update**. Existing saves, photos and settings are preserved. Earlier Preview launchers can update to 1.0.
+![Godzilla running on Windows with Brazilian Portuguese game text](docs/images/gameplay-pt-br.png)
 
-The public ZIP updates an **existing prepared portable installation**. It does not prepare an original game dump automatically. Game files and console firmware are not distributed here; a complete owner-prepared portable folder is separate. No emulator or development tools are needed to run that prepared folder.
+## Getting started
+
+1. Download the application ZIP from [Releases](https://github.com/DavyBirth/godzilla-pc/releases/latest) and extract it to a writable folder.
+2. Open `Godzilla.exe`. On a new installation, choose **Select game**, select your game's `eboot.bin`, then **Prepare game**. If update 01.01 is in a separate folder, select it using the optional update entry.
+3. Once preparation finishes, choose **Play**. The selection and preparation entries disappear when the installation is ready.
+
+The launcher prepares the files locally and bundles the required support tools and Microsoft runtime libraries. You do not need to install an emulator, a compiler, Python or console firmware to play the current release. This is a portable application, without a separate setup wizard. Keep your original game files.
+
+To update, open **Updates → Check for updates → Update**. Existing saves, photos and settings are preserved. Earlier Preview launchers can update through the same menu.
+
+## PC features
+
+| Feature | Available in the current release |
+| --- | --- |
+| Controls | Keyboard and mouse, plus gamepads; automatic or manual PlayStation, Xbox and Nintendo button prompts |
+| Launcher | First-use game preparation, independent game/interface language settings, graphics and control settings, built-in updates |
+| Display | Windowed, fullscreen and borderless modes; output resolution, vertical sync, optional AMD FSR 1 and RCAS sharpening |
+| Photo mode | Free camera, lens and tilt controls, composition guides, image styles and adjustments, manual focus, three configurable lights, saved adjustment presets and PNG capture |
+| Convenience | Local saves, shortcuts to user folders and an optional frame-time/FPS display |
+
+Output resolution and FSR 1 change presentation; they do not increase the original internal rendering resolution. **Internal 4K rendering, DLSS and 120 FPS are not included.**
+
+Useful shortcuts: **Esc** pauses or goes back, **F10** opens photo mode in supported gameplay, **F12** saves a screenshot, and **F3** toggles the performance display. The launcher lists the gameplay controls.
+
+![Expanded PC photo mode with camera, image, focus and lighting controls](docs/images/photo-mode-pt-br.png)
+
+*Actual in-game captures from the Windows runtime, with Brazilian Portuguese selected. Photo-mode lights are off in this example.*
+
+## Languages
+
+The launcher interface supports **Brazilian Portuguese, English, French, German, Italian, Spanish (Spain), Spanish (Latin America) and Japanese**, plus automatic selection from Windows.
+
+Game text is separate from launcher text. The CUSA02046 installation checked for this release contains **Brazilian Portuguese, English, French and Latin American Spanish**. The launcher offers game languages found in your own data; selecting a different launcher language does not translate the game or add dubbing. Language fallback uses English when the requested game text is unavailable.
+
+## What changes compared with the PS4 game and emulation?
+
+The PC additions include keyboard/mouse controls and matching prompts, selectable controller styles, desktop display settings, the expanded photo mode, PNG capture and the preparation/update launcher.
+
+The original x86-64 game code runs natively on the PC CPU. The runtime supplies the console services it needs, while graphics commands and shaders still use a **shadPS4-derived Vulkan backend**. This is not yet a complete reimplementation of the game.
+
+Compared with running through a general emulator, this package provides a dedicated game launcher and the integrated PC additions above. **No matched gameplay benchmark against shadPS4 is published here**, so higher FPS or fewer pauses than emulation are not claimed.
+
+## Latest improvements: 1.0.2
+
+- Corrected ATRAC9 audio normalization and clipping, checked against complete voice and sound-effect clips from the original audio implementation.
+- Corrected three verified close-up photo-mode building material variants so they no longer inherit the gameplay camera's near fade.
+- Restored a compatible persistent Vulkan driver cache before pipeline preload, with safe fallback for unusable cache files, atomic saving and improved shutdown cleanup.
+
+Eight local measurements of the same 68-pipeline preload averaged **about 26% less preload time** than the previous cache path. This measures that startup step on one machine; it is not a gameplay FPS gain, a comparison against shadPS4, or a guarantee that loading pauses disappear.
 
 ## Known limitations
 
-Some buildings can look translucent in photo mode. A reported photo-mode entry failure in the bridge arena has not yet been confirmed resolved. Brief loading pauses were reported on a GTX and remain under investigation. VS is unavailable because PlayStation online services are not provided.
+- VS is unavailable because PlayStation online services are not provided.
+- Photo-mode material fixes cover the verified variants; broader scene coverage remains ongoing.
+- A reported photo-mode entry failure in the bridge arena has not yet been confirmed resolved.
+- Brief loading pauses reported on a GTX remain under investigation.
+- Previously collected blank photos are not recovered automatically.
 
 ## Source and credits
 
@@ -30,7 +82,7 @@ cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang
 cmake --build build
 ```
 
-CMake downloads the remaining dependencies at pinned revisions. Supply your own game data and firmware separately; building does not prepare a playable installation.
+CMake downloads the remaining dependencies at pinned revisions. Supply your own game data separately; building alone does not prepare a playable installation.
 
 ## Code layout
 
@@ -47,8 +99,9 @@ Project C/C++ and C# use `.clang-format` (four spaces, 100 columns). Python scri
 
 ## AAC decoder maintenance
 
-Version 1.0 uses FFmpeg's native AAC decoder in place of FDK AAC. The build no longer fetches or links FDK AAC. The source package includes the complete FFmpeg 7.1.1 source and its pinned vcpkg build recipe, in addition to the prebuilt wrapper.
+The runtime uses FFmpeg's native AAC decoder in place of FDK AAC. The build no longer fetches or links FDK AAC. The source package includes the complete FFmpeg 7.1.1 source and its pinned vcpkg build recipe, in addition to the prebuilt wrapper.
 
 After building, run `powershell -NoProfile -File tools/test_ajm_aac.ps1` for isolated AAC checks. Fixtures are generated from a sine wave and silence; they contain no game recordings. `tools/prepare_ffmpeg_source.py` fetches and verifies the complete FFmpeg source for source packaging.
 
-Existing Preview launchers can update directly to 1.0. The legacy `Godzilla-Windows-update.zip` asset is retained alongside the versioned ZIP; both contain the same package.
+Existing Preview launchers can update to the latest stable release. The legacy `Godzilla-Windows-update.zip` asset is retained alongside the versioned ZIP; both contain the same package.
+
