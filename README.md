@@ -4,7 +4,7 @@
 
 Play Godzilla (PS4, 2015) on Windows with a dedicated native runtime, PC controls, a launcher and an expanded photo mode. You supply your own extracted **CUSA02046 game with update 01.01**. No game files or console firmware are distributed here.
 
-![Godzilla running on Windows with Brazilian Portuguese game text](docs/images/gameplay-pt-br.png)
+![Godzilla photo captured in the Windows runtime, without HUD](docs/images/photo-clean.png)
 
 ## Getting started
 
@@ -30,9 +30,19 @@ Output resolution and FSR 1 change presentation; they do not increase the origin
 
 Useful shortcuts: **Esc** pauses or goes back, **F10** opens photo mode in supported gameplay, **F12** saves a screenshot, and **F3** toggles the performance display. The launcher lists the gameplay controls.
 
-![Expanded PC photo mode with camera, image, focus and lighting controls](docs/images/photo-mode-pt-br.png)
+### Photo mode in action
 
-*Actual in-game captures from the Windows runtime, with Brazilian Portuguese selected. Photo-mode lights are off in this example.*
+The same scene with blur disabled and with manual depth of field. The second capture uses a manual focus setting to change the sharpness across the scene.
+
+| Blur disabled | Manual depth of field |
+| --- | --- |
+| ![Photo mode with blur disabled](docs/images/photo-clean.png) | ![Photo mode with manual depth of field enabled](docs/images/photo-focus-manual.png) |
+
+A separate lighting example, with a colored photo-mode light illuminating Godzilla's dorsal plates:
+
+![Photo mode lighting example without HUD](docs/images/photo-lighting.png)
+
+*Actual unedited in-game captures from photo-mode verification sessions. The HUD and photo menu are hidden; effects come from the runtime, not image editing.*
 
 ## Languages
 
