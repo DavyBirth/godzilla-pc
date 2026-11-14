@@ -2,7 +2,7 @@
 
 
 
-**[Download version 1.0.3](https://github.com/DavyBirth/godzilla-pc/releases/latest)** · [What's new](https://github.com/DavyBirth/godzilla-pc/releases/tag/v1.0.3)
+**[Download version 1.0.4](https://github.com/DavyBirth/godzilla-pc/releases/latest)** · [What's new](https://github.com/DavyBirth/godzilla-pc/releases/tag/v1.0.4)
 
 
 
@@ -98,7 +98,7 @@ The launcher interface supports **Brazilian Portuguese, English, French, German,
 
 
 
-Game text is separate from launcher text. The CUSA02046 installation checked for this release contains **Brazilian Portuguese, English, French and Latin American Spanish**. The launcher offers game languages found in your own data; selecting a different launcher language does not translate the game or add dubbing. Language fallback uses English when the requested game text is unavailable.
+Game text is separate from launcher text. The CUSA02046 installation checked for this release contains **Brazilian Portuguese, English, French and Latin American Spanish**. The launcher offers game languages found in your own data; selecting a different launcher language does not translate the game or add dubbing. Language fallback uses English when the requested game text is unavailable. Photo mode, on-screen PC hints and notice dialogs follow the language the game is actually using, in any of the eight languages above.
 
 
 
@@ -118,7 +118,16 @@ Compared with running through a general emulator, this package provides a dedica
 
 
 
-## Latest improvements: 1.0.3
+## Latest improvements: 1.0.4
+
+- Hold the right mouse button to rotate the photo camera a full 360 degrees. Moving the mouse alone no longer turns the camera.
+- Alt+Tab or minimizing keeps photo mode open; its controls resume when you return.
+- Turning a photo light on places it next to Godzilla, aimed at him. Light steps start at 10 units and repeat while held; spotlights can be aimed.
+- A camera and light orientation indicator in the style of the game's radar; it never appears in saved photos.
+- Photo mode, hints and notice dialogs are available in eight languages and follow the game language.
+- The guarded building near-fade correction now covers 3,797 material profiles (was 27). Close-up facades and windows were checked in stage 5, area 11; this does not certify every facade or material in all scenes.
+
+## Previous improvements: 1.0.3
 
 - Scroll the photo menu with the mouse wheel or drag its scrollbar. Hovering over a row preserves the selected setting.
 - Place photo lights with an initial movement step of 0.1 units, adjustable down to 0.001.
@@ -155,7 +164,7 @@ Two of the first issues addressed in this port were flickering prerecorded video
 
 - VS is unavailable because PlayStation online services are not provided.
 
-- Photo-mode facade coverage remains under review. Version 1.0.3 covers 27 guarded material profiles, with visual checks in stage 5, area 11; all buildings in all scenes have not been certified.
+- Photo-mode facade coverage remains under review. Version 1.0.4 covers 3,797 guarded material profiles, with visual checks in stage 5, area 11; all buildings in all scenes have not been certified.
 
 - A reported photo-mode entry failure in the bridge arena has not yet been confirmed resolved.
 
