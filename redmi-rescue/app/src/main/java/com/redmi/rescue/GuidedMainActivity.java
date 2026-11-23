@@ -79,7 +79,7 @@ public final class GuidedMainActivity extends Activity {
       alternative.setGravity(Gravity.CENTER);
       alternative.setPadding(0,dp(16),0,dp(4));
       alternative.setVisibility(View.GONE);
-      alternative.setOnClickListener(v->ReportVault.promptSave(this,true));
+      alternative.setOnClickListener(v->saveReport(true));
 
       TextView note=label("PRIVACIDADE",12,ACCENT,true);
       note.setPadding(0,dp(26),0,dp(8));
@@ -133,7 +133,7 @@ public final class GuidedMainActivity extends Activity {
       if(phase==2){
         step.setText("ETAPA 3 DE 3  •  CONCLUÍDO");
         title.setText("Seu diagnóstico está pronto");
-        explain.setText("Salve o TXT completo para investigar o consumo de espaço. Você também pode exportar uma tabela CSV para o Excel.");
+        explain.setText("O relatório será gravado automaticamente em Downloads / RedmiRescue. O aplicativo verificará que não ficou vazio. Você também pode gerar um CSV para o Excel.");
         primary.setText("Salvar relatório TXT");
         primary.setEnabled(true);primary.setAlpha(1f);
         alternative.setText("Ou salvar tabela CSV (Excel)");
@@ -159,7 +159,7 @@ public final class GuidedMainActivity extends Activity {
       }
     }
     private void proceed(){
-      if(phase==2){ReportVault.promptSave(this,false);return;}
+      if(phase==2){saveReport(false);return;}
       if(phase!=0)return;
       if(!AppStorageAudit.hasPermission(this)){pausedForSettings=true;AppStorageAudit.requestPermission(this);return;}
       if(!fileAccess()){pausedForSettings=true;StorageAudit.askPermission(this);return;}
@@ -212,6 +212,39 @@ public final class GuidedMainActivity extends Activity {
       status.setText(report.toString());
       showStep();
     }
+    private void saveReport(boolean csv){
+      ReportVault.SavedReport saved=ReportVault.saveToDownloads(this,csv);
+      if(!saved.ok()){
+        new AlertDialog.Builder(this)
+          .setTitle("Não foi possível salvar")
+          .setMessage("Nenhum arquivo pessoal foi alterado.\nMotivo: "+saved.error+
+            "\n\nVerifique se ainda há espaço livre e tente novamente.")
+          .setPositiveButton("OK",null).show();
+        return;
+      }
+      String type=csv?"text/csv":"text/plain";
+      new AlertDialog.Builder(this)
+        .setTitle("Relatório salvo e verificado ✓")
+        .setMessage("Downloads / RedmiRescue / "+saved.filename+
+          "\n\nTamanho confirmado: "+saved.bytes+" bytes.\nO arquivo foi gravado e lido novamente, sem estar vazio.")
+        .setNegativeButton("Fechar",null)
+        .setNeutralButton("Abrir", (d,w)->{
+          Intent i=new Intent(Intent.ACTION_VIEW);
+          i.setDataAndType(saved.uri,type);
+          i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+          try {startActivity(Intent.createChooser(i,"Abrir relatório"));}
+          catch(Exception e){new AlertDialog.Builder(this).setMessage("Não há um aplicativo para abrir este tipo de arquivo. Ele está salvo em Downloads / RedmiRescue.").setPositiveButton("OK",null).show();}
+        })
+        .setPositiveButton("Compartilhar", (d,w)->{
+          Intent i=new Intent(Intent.ACTION_SEND);
+          i.setType(type);
+          i.putExtra(Intent.EXTRA_STREAM,saved.uri);
+          i.setClipData(android.content.ClipData.newUri(getContentResolver(),"Redmi Rescue",saved.uri));
+          i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+          startActivity(Intent.createChooser(i,"Compartilhar arquivo"));
+        }).show();
+    }
+
     @Override protected void onActivityResult(int requestCode,int resultCode,Intent data) {
       super.onActivityResult(requestCode,resultCode,data);
       if(requestCode==ReportVault.SAVE_TXT||requestCode==ReportVault.SAVE_CSV){
