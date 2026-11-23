@@ -143,6 +143,15 @@ public final class StorageAudit {
       if(stoppedThermal)s.append("\nATENÇÃO: leitura interrompida por aquecimento do aparelho.\n");
       if(skipped>0)s.append("\nPastas/itens inacessíveis ou ignorados: ").append(skipped).append("\n");
       s.append("\nNENHUM ARQUIVO FOI ALTERADO OU EXCLUÍDO.");
+      ArrayList<String[]> exportRows=new ArrayList<>();
+      for(Map.Entry<String,Long> e:top){
+        exportRows.add(new String[]{"Pasta",e.getKey(),Long.toString(e.getValue()),
+           Integer.toString(counts.getOrDefault(e.getKey(),0)),"Armazenamento compartilhado acessível"});
+      }
+      for(Big b:large){
+        exportRows.add(new String[]{"Arquivo grande",b.name+" ["+b.category+"]",
+           Long.toString(b.bytes),"1","Somente leitura"});
+      }
       String visible=s.toString();
       String sharedReport="MAPA DE ARMAZENAMENTO\nLivre: "+gb(base.getUsableSpace())+
          "\nArquivos acessíveis: "+gb(visibleBytes)+"\nNão explicados por leitura: "+gb(unaccounted)+
@@ -150,7 +159,7 @@ public final class StorageAudit {
       for(int i=0;i<Math.min(15,top.size());i++)
         sharedReport+=top.get(i).getKey()+": "+gb(top.get(i).getValue())+"\n";
       String finalReport=sharedReport;
-      a.runOnUiThread(()->{output.setText(visible);onReport.accept(finalReport);});
+      a.runOnUiThread(()->{output.setText(visible);ReportVault.setFolderAnalysis(visible,exportRows);onReport.accept(finalReport);});
     },"redmi-storage-audit").start();
   }
 }
