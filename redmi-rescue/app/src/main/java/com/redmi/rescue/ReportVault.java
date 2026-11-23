@@ -16,7 +16,7 @@ import java.util.Locale;
 public final class ReportVault {
   private ReportVault(){}
   public static final int SAVE_TXT=51, SAVE_CSV=52;
-  private static String diagnosis="", folders="", apps="", media="";
+  private static String diagnosis="", folders="", apps="", media="", root="";
   private static final ArrayList<String[]> rows=new ArrayList<>();
   private static final long GiB=1024L*1024L*1024L;
   public static synchronized void setDiagnosis(String s) { diagnosis=s; }
@@ -30,8 +30,13 @@ public final class ReportVault {
     rows.removeIf(r->r.length>0 && "Aplicativo".equals(r[0]));
     for(String[] e:entries)rows.add(e.clone());
   }
+  public static synchronized void setRootAnalysis(String text,List<String[]> entries) {
+    root=text;
+    rows.removeIf(r->r.length>0 && r[0].startsWith("Root / "));
+    for(String[] e:entries)rows.add(e.clone());
+  }
   public static synchronized void setMedia(String s) { media=s; }
-  public static synchronized boolean isEmpty() { return diagnosis.isEmpty()&&folders.isEmpty()&&apps.isEmpty()&&media.isEmpty(); }
+  public static synchronized boolean isEmpty() { return diagnosis.isEmpty()&&folders.isEmpty()&&apps.isEmpty()&&media.isEmpty()&&root.isEmpty(); }
   private static String stamp(){return new SimpleDateFormat("yyyy-MM-dd_HH-mm",Locale.ROOT).format(new Date());}
   public static void promptSave(Activity a,boolean csv) {
     Intent intent=new Intent(Intent.ACTION_CREATE_DOCUMENT);
@@ -74,6 +79,7 @@ public final class ReportVault {
        "\n\n=== MAPA DO ARMAZENAMENTO ===\n"+folders+
        "\n\n=== APLICATIVOS ===\n"+apps+
        "\n\n=== MÍDIAS ===\n"+media+
+       "\n\n=== AUDITORIA ROOT (OPCIONAL) ===\n"+root+
        "\n\nAVISO: Não é um diagnóstico de hardware nem garantia de ganho de desempenho."+
        "\nNenhum arquivo foi apagado para gerar este relatório.\n";
   }
