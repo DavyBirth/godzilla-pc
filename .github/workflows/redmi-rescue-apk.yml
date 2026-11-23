@@ -21,7 +21,14 @@ jobs:
         with:
           gradle-version: '8.10.2'
       - name: Install SDK
-        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager -print -quit)"
+          if [[ -z "$SDKMANAGER" ]]; then echo 'sdkmanager not found in Android SDK'; exit 1; fi
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
+          "$SDKMANAGER" 'platforms;android-35' 'build-tools;35.0.0'
       - name: Compile APK
         run: gradle -p redmi-rescue :app:assembleDebug --no-daemon --stacktrace
       - name: Upload APK
