@@ -72,7 +72,7 @@ public class MainActivity extends Activity {
         button("Revisar um arquivo (não exclui)",()->pick());
         button("Salvar relatório CSV para Excel",()->ReportVault.promptSave(this,true));
         button("Salvar relatório TXT completo",()->ReportVault.promptSave(this,false));
-        button("Compartilhar resumo sem anexos",()->share());
+        button("Compartilhar relatório COMPLETO",()->share());
         output=label("Diagnóstico inicial",15,text);
         diagnostics();
     }
@@ -252,7 +252,7 @@ public class MainActivity extends Activity {
     }
     void share(){
         Intent i=new Intent(Intent.ACTION_SEND);i.setType("text/plain");
-        i.putExtra(Intent.EXTRA_TEXT,"REDMI RESCUE BETA\n"+report+"\nNenhum dado foi enviado automaticamente.");
+        i.putExtra(Intent.EXTRA_TEXT,ReportVault.shareFullText());
         startActivity(Intent.createChooser(i,"Compartilhar diagnóstico"));
     }
 }
