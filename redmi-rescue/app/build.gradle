@@ -1,0 +1,16 @@
+plugins { id 'com.android.application' }
+android {
+ namespace 'com.redmi.rescue'
+ compileSdk 35
+ defaultConfig {
+  applicationId 'com.redmi.rescue'
+  minSdk 29
+  targetSdk 35
+  versionCode 2
+  versionName '4.1-beta'
+ }
+ compileOptions {
+  sourceCompatibility JavaVersion.VERSION_17
+  targetCompatibility JavaVersion.VERSION_17
+ }
+}
