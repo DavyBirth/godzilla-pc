@@ -9,7 +9,7 @@
 <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
 <application android:label="Redmi Rescue" android:allowBackup="false" android:usesCleartextTraffic="false" android:theme="@android:style/Theme.Material.Light.NoActionBar">
-<activity android:name=".MainActivity" android:exported="true"><intent-filter>
+<activity android:name=".GuidedMainActivity" android:exported="true"><intent-filter>
 <action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/>
 </intent-filter></activity>
 </application></manifest>
