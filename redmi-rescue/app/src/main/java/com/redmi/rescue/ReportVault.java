@@ -1,6 +1,12 @@
 package com.redmi.rescue;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.provider.MediaStore;
+import android.os.Environment;
+import java.io.InputStream;
+import java.util.Arrays;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -84,6 +90,60 @@ public final class ReportVault {
        "\nNenhum arquivo foi apagado para gerar este relatório.\n";
   }
   public static synchronized String shareFullText() { return asTxt(); }
+
+  /**
+   * Saves a new app-owned report in public Downloads/RedmiRescue using MediaStore.
+   * We never modify user files. A newly created incomplete report is removed on failure.
+   */
+  public static final class SavedReport {
+    public final Uri uri;
+    public final String filename;
+    public final long bytes;
+    public final String error;
+    SavedReport(Uri u,String n,long b,String e) {uri=u;filename=n;bytes=b;error=e;}
+    public boolean ok(){return uri!=null && bytes>0;}
+  }
+  public static SavedReport saveToDownloads(Activity activity,boolean csv){
+    String name="Redmi_Rescue_"+stamp()+"_"+(System.currentTimeMillis()%100000L)+(csv?".csv":".txt");
+    byte[] content=(csv?asCsv():asTxt()).getBytes(StandardCharsets.UTF_8);
+    if(content.length<64) return new SavedReport(null,name,0,"Relatório ainda não tem dados suficientes.");
+    ContentResolver resolver=activity.getContentResolver();
+    Uri created=null;
+    try{
+      ContentValues values=new ContentValues();
+      values.put(MediaStore.MediaColumns.DISPLAY_NAME,name);
+      values.put(MediaStore.MediaColumns.MIME_TYPE,csv?"text/csv":"text/plain");
+      values.put(MediaStore.MediaColumns.RELATIVE_PATH,Environment.DIRECTORY_DOWNLOADS+"/RedmiRescue");
+      values.put(MediaStore.MediaColumns.IS_PENDING,1);
+      created=resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI,values);
+      if(created==null) throw new IllegalStateException("O Android não criou a entrada no Downloads.");
+      try(OutputStream stream=resolver.openOutputStream(created,"w")){
+        if(stream==null)throw new IllegalStateException("O arquivo não abriu para gravação.");
+        stream.write(content);
+        stream.flush();
+      }
+      ContentValues visible=new ContentValues();
+      visible.put(MediaStore.MediaColumns.IS_PENDING,0);
+      if(resolver.update(created,visible,null,null)<1)
+        throw new IllegalStateException("O Android não confirmou o arquivo salvo.");
+      // Read back all bytes to rule out an empty or truncated file.
+      byte[] readback=new byte[content.length+1];
+      int length=0;
+      try(InputStream input=resolver.openInputStream(created)){
+        if(input==null)throw new IllegalStateException("Não foi possível verificar o arquivo salvo.");
+        int n;
+        while(length<readback.length && (n=input.read(readback,length,readback.length-length))!=-1)length+=n;
+      }
+      if(length!=content.length)throw new IllegalStateException("Arquivo incompleto: "+length+" de "+content.length+" bytes.");
+      for(int i=0;i<content.length;i++)if(content[i]!=readback[i])
+        throw new IllegalStateException("O arquivo não corresponde ao relatório gerado.");
+      return new SavedReport(created,name,content.length,null);
+    }catch(Exception ex){
+      if(created!=null)try{resolver.delete(created,null,null);}catch(Exception ignored){}
+      return new SavedReport(null,name,0,ex.getClass().getSimpleName()+": "+ex.getMessage());
+    }
+  }
+
   public static boolean write(Activity a,Uri uri,boolean csv) {
     if(uri==null)return false;
     try(OutputStream out=a.getContentResolver().openOutputStream(uri,"w")){
