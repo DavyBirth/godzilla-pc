@@ -76,13 +76,14 @@ public final class ReportVault {
     return "REDMI RESCUE — RELATÓRIO LOCAL\n"+
        "Gerado em: "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault()).format(new Date())+
        "\n\n=== DIAGNÓSTICO ===\n"+diagnosis+
-       "\n\n=== MAPA DO ARMAZENAMENTO ===\n"+folders+
-       "\n\n=== APLICATIVOS ===\n"+apps+
-       "\n\n=== MÍDIAS ===\n"+media+
-       "\n\n=== AUDITORIA ROOT (OPCIONAL) ===\n"+root+
+       "\n\n=== MAPA DO ARMAZENAMENTO ===\n"+(folders.isEmpty()?"Não executado":folders)+
+       "\n\n=== APLICATIVOS ===\n"+(apps.isEmpty()?"Não executado. Abra 'Descobrir aplicativos que ocupam mais espaço', conceda Acesso ao uso e execute outra vez.":apps)+
+       "\n\n=== MÍDIAS ===\n"+(media.isEmpty()?"Não executado":media)+
+       "\n\n=== AUDITORIA ROOT (OPCIONAL) ===\n"+(root.isEmpty()?"Não executada / não necessária para a análise comum":root)+
        "\n\nAVISO: Não é um diagnóstico de hardware nem garantia de ganho de desempenho."+
        "\nNenhum arquivo foi apagado para gerar este relatório.\n";
   }
+  public static synchronized String shareFullText() { return asTxt(); }
   public static boolean write(Activity a,Uri uri,boolean csv) {
     if(uri==null)return false;
     try(OutputStream out=a.getContentResolver().openOutputStream(uri,"w")){
