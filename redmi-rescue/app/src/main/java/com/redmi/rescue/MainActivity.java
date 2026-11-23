@@ -63,6 +63,11 @@ public class MainActivity extends Activity {
         button("Autorizar leitura das mídias",()->permissions());
         button("Mapear pastas acessíveis (somente leitura)",()->StorageAudit.start(this, output, s->{report += "\n\n"+s;}));
         button("Descobrir aplicativos que ocupam mais espaço",()->AppStorageAudit.start(this, output));
+        button("Auditoria profunda ROOT (opcional)",()->new AlertDialog.Builder(this)
+            .setTitle("Auditoria ROOT — somente leitura")
+            .setMessage("Usa superusuário para medir tamanhos de pastas protegidas, sem copiar, editar ou excluir arquivos. NÃO desbloqueie o bootloader sem fazer backup: a Xiaomi apaga os dados no desbloqueio. Deseja tentar apenas se este aparelho já estiver rooteado?")
+            .setNegativeButton("Cancelar",null)
+            .setPositiveButton("Verificar", (d,w)->RootStorageAudit.start(this,output)).show());
         button("Analisar arquivos grandes e duplicatas",()->startScan());
         button("Revisar um arquivo (não exclui)",()->pick());
         button("Salvar relatório CSV para Excel",()->ReportVault.promptSave(this,true));
