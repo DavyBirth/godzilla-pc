@@ -179,11 +179,11 @@ public final class GuidedMainActivity extends Activity {
         status.setText("✓  Pastas mapeadas\n2/2  Consultando os dados dos aplicativos...");
         AppStorageAudit.start(this,workerDisplay,()->{
           appFull=workerDisplay.getText().toString();
-          finish();
+          finishAudit();
         });
       });
     }
-    private void finish(){
+    private void finishAudit(){
       phase=2;
       // Include short, useful facts without producing a wall of technical text.
       StringBuilder report=new StringBuilder();
