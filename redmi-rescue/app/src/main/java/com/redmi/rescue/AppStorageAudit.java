@@ -64,6 +64,10 @@ public final class AppStorageAudit {
         StorageStats u=manager.queryStatsForUser(StorageManager.UUID_DEFAULT,Process.myUserHandle());
         intro.append("DADOS DO PERFIL (estatísticas do Android)\n");
         intro.append("Dados de usuário/aplicativos: ").append(gb(u.getDataBytes())).append("\n");
+        android.os.StatFs physical=new android.os.StatFs(android.os.Environment.getDataDirectory().getAbsolutePath());
+        if(u.getDataBytes()>physical.getTotalBytes()) {
+          intro.append("ATENÇÃO: estatística agregada maior que a capacidade física! Dado inconsistente no aparelho; não usar para estimar espaço recuperável.\n");
+        }
         intro.append("Código instalado (pode vir zerado nesta consulta): ").append(gb(u.getAppBytes())).append("\n");
         intro.append("Cache agregado (pode vir zerado nesta consulta): ").append(gb(u.getCacheBytes())).append("\n");
         intro.append("Esses tamanhos NÃO devem ser somados às mídias ou às pastas; podem se sobrepor.\n\n");
