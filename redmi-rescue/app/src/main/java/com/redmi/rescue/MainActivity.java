@@ -61,10 +61,13 @@ public class MainActivity extends Activity {
         label("Sem root · sem internet · sem exclusão automática",13,text);
         button("Atualizar diagnóstico",()->diagnostics());
         button("Autorizar leitura das mídias",()->permissions());
-        button("Mapear TODAS as pastas acessíveis (somente leitura)",()->StorageAudit.start(this, output, s->{report += "\n\n"+s;}));
+        button("Mapear pastas acessíveis (somente leitura)",()->StorageAudit.start(this, output, s->{report += "\n\n"+s;}));
+        button("Descobrir aplicativos que ocupam mais espaço",()->AppStorageAudit.start(this, output));
         button("Analisar arquivos grandes e duplicatas",()->startScan());
         button("Revisar um arquivo (não exclui)",()->pick());
-        button("Compartilhar relatório",()->share());
+        button("Salvar relatório CSV para Excel",()->ReportVault.promptSave(this,true));
+        button("Salvar relatório TXT completo",()->ReportVault.promptSave(this,false));
+        button("Compartilhar resumo sem anexos",()->share());
         output=label("Diagnóstico inicial",15,text);
         diagnostics();
     }
@@ -94,7 +97,7 @@ public class MainActivity extends Activity {
           "\nTemperatura da bateria: "+(c<0?"indisponível":String.format(Locale.getDefault(),"%.1f °C",c))+
           "\nEstado térmico Android: "+thermal+
           "\n\nA RAM disponível é instantânea e não mede velocidade. A temperatura da bateria não é a temperatura do processador.";
-        report=s;output.setText(s);
+        report=s;ReportVault.setDiagnosis(s);output.setText(s);
     }
     boolean allowed(){
         if(Build.VERSION.SDK_INT>=33)
@@ -194,6 +197,7 @@ public class MainActivity extends Activity {
             final String summary="Mídias indexadas: "+items.size()+"\nGrupos duplicados: "+dup.size()+"\nPotencial: "+gib(redundant)+"\nComparados: "+compared+"\nIgnorados: "+skipped;
             runOnUiThread(()->{
                 output.setText(view+"\nNenhum arquivo foi excluído.");
+                ReportVault.setMedia(view);
                 report+="\n\n"+summary;
                 if(!dup.isEmpty())button("Revisar duplicatas (sem apagar)",()->reviewDuplicates());
                 scanning=false;
@@ -221,6 +225,13 @@ public class MainActivity extends Activity {
     }
     @Override protected void onActivityResult(int req,int code,Intent data){
         super.onActivityResult(req,code,data);
+        if(req==ReportVault.SAVE_TXT||req==ReportVault.SAVE_CSV){
+            if(code==RESULT_OK && data!=null && data.getData()!=null) {
+                boolean saved=ReportVault.write(this,data.getData(),req==ReportVault.SAVE_CSV);
+                notice(saved?"Relatório salvo! Abra o gerenciador Arquivos no local escolhido.":"Não foi possível salvar. Verifique o armazenamento e tente outra pasta.");
+            }
+            return;
+        }
         if(req!=FILE_REQUEST||code!=RESULT_OK||data==null||data.getData()==null)return;
         Uri uri=data.getData();
         String name="arquivo",provider=uri.getAuthority();
