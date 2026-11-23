@@ -80,13 +80,12 @@ public final class AppStorageAudit {
         intro.append("Vídeos: ").append(gb(ext.getVideoBytes())).append("\n");
         intro.append("Áudio: ").append(gb(ext.getAudioBytes())).append("\n");
         intro.append("Arquivos de aplicativos: ").append(gb(ext.getAppBytes())).append("\n");
-        intro.append("OBB de jogos: ").append(gb(ext.getObbBytes())).append("\n");
         intro.append("Categorias podem se sobrepor a outros relatórios; não representam lixo.\n\n");
         rows.add(new String[]{"Resumo Android","Armazenamento compartilhado (estatística)",Long.toString(ext.getTotalBytes()),"1","Estatística Android; não somar com arquivos"});
         rows.add(new String[]{"Resumo Android","Mídia: vídeos",Long.toString(ext.getVideoBytes()),"1","Estatística Android"});
         rows.add(new String[]{"Resumo Android","Mídia: imagens",Long.toString(ext.getImageBytes()),"1","Estatística Android"});
         rows.add(new String[]{"Resumo Android","Mídia: áudio",Long.toString(ext.getAudioBytes()),"1","Estatística Android"});
-        rows.add(new String[]{"Resumo Android","Arquivos de aplicativos/OBB",Long.toString(ext.getAppBytes()+ext.getObbBytes()),"1","Detalhamento agregado Android"});
+        rows.add(new String[]{"Resumo Android","Arquivos de aplicativos (armazenamento compartilhado)",Long.toString(ext.getAppBytes()),"1","Categoria agregada Android"});
       }catch(Exception e){
         intro.append("Categorias de armazenamento do Android indisponíveis: ").append(e.getClass().getSimpleName()).append("\n\n");
       }
