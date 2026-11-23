@@ -61,8 +61,9 @@ public class MainActivity extends Activity {
         label("Sem root · sem internet · sem exclusão automática",13,text);
         button("Atualizar diagnóstico",()->diagnostics());
         button("Autorizar leitura das mídias",()->permissions());
+        button("Mapear TODAS as pastas acessíveis (somente leitura)",()->StorageAudit.start(this, output, s->{report += "\n\n"+s;}));
         button("Analisar arquivos grandes e duplicatas",()->startScan());
-        button("Revisar instaladores da pasta Download",()->pick());
+        button("Revisar um arquivo (não exclui)",()->pick());
         button("Compartilhar relatório",()->share());
         output=label("Diagnóstico inicial",15,text);
         diagnostics();
