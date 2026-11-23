@@ -2,3 +2,10 @@
 /.venv/
 __pycache__/
 *.pyc
+
+# Keep personal instructions and internal session notes out of public source.
+/AGENTS.md
+/docs/*.md
+/docs/**/*.md
+!/docs/README.md
+!/docs/release/*.md
