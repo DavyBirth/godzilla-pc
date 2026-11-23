@@ -27,7 +27,7 @@ public final class ReportVault {
   }
   public static synchronized void setAppAnalysis(String text,List<String[]> entries) {
     apps=text;
-    rows.removeIf(r->r.length>0 && "Aplicativo".equals(r[0]));
+    rows.removeIf(r->r.length>0 && ("Aplicativo".equals(r[0])||"Resumo Android".equals(r[0])));
     for(String[] e:entries)rows.add(e.clone());
   }
   public static synchronized void setRootAnalysis(String text,List<String[]> entries) {
@@ -77,7 +77,7 @@ public final class ReportVault {
        "Gerado em: "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault()).format(new Date())+
        "\n\n=== DIAGNÓSTICO ===\n"+diagnosis+
        "\n\n=== MAPA DO ARMAZENAMENTO ===\n"+(folders.isEmpty()?"Não executado":folders)+
-       "\n\n=== APLICATIVOS ===\n"+(apps.isEmpty()?"Não executado. Abra 'Descobrir aplicativos que ocupam mais espaço', conceda Acesso ao uso e execute outra vez.":apps)+
+       "\n\n=== APLICATIVOS ===\n"+(apps.isEmpty()?"Não executado. Conceda Acesso ao uso e inicie a varredura guiada.":apps)+
        "\n\n=== MÍDIAS ===\n"+(media.isEmpty()?"Não executado":media)+
        "\n\n=== AUDITORIA ROOT (OPCIONAL) ===\n"+(root.isEmpty()?"Não executada / não necessária para a análise comum":root)+
        "\n\nAVISO: Não é um diagnóstico de hardware nem garantia de ganho de desempenho."+
